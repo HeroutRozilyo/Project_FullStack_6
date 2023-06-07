@@ -1,0 +1,112 @@
+/* posts.css */
+
+.post-container {
+  display: block;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.post-container:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+.post-container-active {
+  position: relative;
+  z-index: 1;
+  box-shadow: 0 0 20px rgba(59, 89, 152, 0.5);
+}
+
+.post-container-active::before {
+  content: "";
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  right: -5px;
+  bottom: -5px;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(59, 89, 152, 0.5);
+  pointer-events: none;
+}
+
+.post-header {
+  padding: 20px;
+  border-bottom: 1px solid #ddd;
+}
+
+.post-title {
+  margin-bottom: 10px;
+  font-size: 24px;
+  font-weight: 600;
+  color: #3b5998;
+}
+
+.post-body {
+  margin-bottom: 15px;
+  font-size: 16px;
+  color: #333;
+}
+
+.view-comments-button {
+  display: inline-block;
+  padding: 8px 16px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+  background-color: #3b5998;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.view-comments-button:hover {
+  background-color: #2d4373;
+}
+
+/* Beautiful and Facebook-inspired Design */
+.post-container {
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.post-container:hover {
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+.post-container-active {
+  position: relative;
+  z-index: 1;
+  box-shadow: 0 0 20px rgba(59, 89, 152, 0.5);
+}
+
+.post-container-active::before {
+  content: "";
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  right: -5px;
+  bottom: -5px;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(59, 89, 152, 0.5);
+  pointer-events: none;
+}
+
+.post-title {
+  color: #3b5998;
+}
+
+.post-body {
+  color: #333;
+}
+
+.view-comments-button {
+  background-color: #3b5998;
+}
+
+.view-comments-button:hover {
+  background-color: #2d4373;
+}

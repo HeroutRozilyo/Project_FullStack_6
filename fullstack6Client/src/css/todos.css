@@ -1,0 +1,169 @@
+/* todos.css */
+
+/* General Styles */
+.todos-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .todos-page {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+  }
+  
+  .todos-filter {
+    display: flex;
+    align-items: center;
+    margin-right: 10px; /* Add margin to create space between filter and sort */
+  }
+  
+  .todos-filter-button {
+    display: flex;
+    align-items: center;
+    padding: 5px 10px;
+    background-color: #4267B2;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .todos-filter-button i {
+    margin-right: 5px;
+  }
+  
+  .todos-filter-options {
+    margin-top: 10px;
+  }
+  
+  .todos-filter-options label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  .todos-sort {
+    display: flex;
+    align-items: center;
+  }
+  
+  
+    .todos-label {
+        margin-right: 5px;
+        color: #3b5998!important;
+      }
+  
+  
+  .todos-select {
+    padding: 5px 10px;
+  }
+  
+  .todos-list {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .todos-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+  }
+  
+  .todos-checkbox {
+    margin-right: 10px;
+  }
+  
+  /* Completed Task Styles */
+  .todos-item.completed .todos-text {
+    text-decoration: line-through;
+    color: #888;
+  }
+  
+  /* Beautiful and Facebook-inspired Design */
+  .todos-page {
+    background-color: #f7f7f7;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .todos-filter-button {
+    background-color: #4267B2;
+    color: white;
+  }
+  
+  .todos-filter-button:hover {
+    background-color: #3b5998;
+  }
+  
+  .todos-filter-options {
+    background-color: #f7f7f7;
+    padding: 5px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+  
+  .todos-label {
+    color: #888;
+  }
+  
+  .todos-select {
+    padding: 5px 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+  
+  .todos-item {
+    background-color: white;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+  
+  .todos-item:hover {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .todos-text {
+    color: #333;
+  }
+  
+  .todos-checkbox:checked + .todos-text {
+    text-decoration: line-through;
+    color: #888;
+  }
+  
+  /* Updated Filter Options Styling */
+  .todos-filter-options{
+    border: none;
+  }
+  
+  .todos-filter-options label {
+    display: inline-block;
+    margin-right: 10px;
+    padding: 8px 12px;
+   
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 14px;
+    font-weight: bold;
+    color: #65676b;
+  }
+  
+  .todos-filter-options label:hover {
+    background-color: #d8dbe0;
+  }
+  
+  .todos-filter-options label input[type="radio"]:checked {
+    background-color: #4267B2;
+    color: white;
+  }
+  
+  .todos-filter-options label input[type="radio"]:checked:hover {
+    background-color: #3b5998;
+  }
+  
+  
+  

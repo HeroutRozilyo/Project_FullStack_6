@@ -1,0 +1,111 @@
+.post-comments {
+    margin-top: 20px;
+  }
+  
+  .comments-header {
+    font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #3b5998;
+  }
+  
+  .comment-container {
+    background-color: #f6f7f9;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .comment-name {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  .comment-body {
+    font-size: 14px;
+  }
+  
+  .comment-container:before {
+    content: "";
+    position: absolute;
+    top: 10px;
+    left: -15px;
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+    border-right: 8px solid #b4b5b6;
+  }
+  
+  .comment-container:after {
+    content: "";
+    position: absolute;
+    top: 10px;
+    left: -16px;
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+    border-right: 8px solid #fff;
+  }
+  
+  .comment-container:before,
+  .comment-container:after {
+    z-index: -1;
+  }
+  
+  .comment-container:hover {
+    box-shadow: 0 5px 10px rgba(71, 92, 155, 0.2);
+    transform: translateY(-2px);
+  }
+  
+  .comment-container:hover:before,
+  .comment-container:hover:after {
+    border-right-color: #f6f7f9;
+  }
+  
+  .comment-container:before {
+    transition: all 0.3s ease;
+  }
+  
+  .comment-container:after {
+    transition: all 0.3s ease;
+  }
+  
+  .comment-container.active {
+    box-shadow: 0 0 20px rgba(59, 89, 152, 0.5);
+    transform: translateY(0);
+    z-index: 1;
+  }
+  
+  .comment-container.active:before,
+  .comment-container.active:after {
+    border-right-color: #f6f7f9;
+  }
+  
+  .comment-container.active:before {
+    content: "";
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    right: -5px;
+    bottom: -5px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(59, 89, 152, 0.5);
+    pointer-events: none;
+    z-index: -1;
+  }
+  
+  .comment-container.active:after {
+    content: "";
+    position: absolute;
+    top: -6px;
+    left: -6px;
+    right: -6px;
+    bottom: -6px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+    pointer-events: none;
+    z-index: -1;
+  }
+  

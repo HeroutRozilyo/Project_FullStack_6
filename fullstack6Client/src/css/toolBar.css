@@ -1,0 +1,46 @@
+.toolbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 50px;
+    background-color: #3b5998;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 0 20px;
+    z-index: 100;
+  }
+  
+  .menuBar {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .menuBar li {
+    display: inline-block;
+  }
+  
+  .menuBar li a {
+    color: #fff;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 5px 10px;
+  }
+  
+  .menuBar li a:hover {
+    opacity: 0.7;
+  }
+  
+  .menuBar-icon {
+    font-size: 20px;
+    margin-bottom: 5px;
+  }
+  .my-link {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  background-image: linear-gradient(to bottom, #3b58987a, #707c89);
+}
+  
