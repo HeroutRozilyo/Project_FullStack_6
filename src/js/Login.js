@@ -15,7 +15,7 @@ function Login() {
       // Show loading indicator
       setLoading(true);
 
-      const response = await fetch(`https://jsonplaceholder.typicode.com/users?username=${username}`);
+      const response = await fetch(`http://localhost:3001/api/users?username=${username}`);
 
       if (!response.ok) {
         // Handle network errors
@@ -24,10 +24,14 @@ function Login() {
 
       const users = await response.json();
       const user = users[0];
+      console.log(user)
 
-      if (user && password === user.address.geo.lat.slice(-4)) {
+      const res = await fetch(`http://localhost:3001/api/passwords/${user.id}`);
+      const pswrd = await res.json();
+
+      if (user && password === pswrd.password) {
         localStorage.setItem('user', JSON.stringify(user));
-        history('/application');
+        history(`/users/${user && user.name}`);
       } else {
         // Handle API errors
         throw new Error('Invalid login credentials');
@@ -40,7 +44,7 @@ function Login() {
       setLoading(false);
     }
   };
-
+  
   return (
     <div className="login">
       <form className="login-form" onSubmit={handleSubmit}>

@@ -12,7 +12,7 @@ function Albums() {
 
   useEffect(() => {
     try {
-      fetch(`https://jsonplaceholder.typicode.com/albums?userId=${userId}`)
+      fetch(`localhost:3001/api/users/${userId}/albums`)
         .then((response) => response.json())
         .then((data) => setAlbums(data));
     } catch (error) {

@@ -11,7 +11,7 @@ function AlbumsItem() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch(`https://jsonplaceholder.typicode.com/photos?albumId=${id}`)
+    fetch(`http://localhost:3001/api/users/${id}/photos`)
       .then((response) => response.json())
       .then((data) => {
         setPhotos(data);

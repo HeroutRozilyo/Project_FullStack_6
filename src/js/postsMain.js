@@ -12,7 +12,7 @@ function Posts() {
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user"));
     const userId = user.id;
-    fetch(`https://jsonplaceholder.typicode.com/posts?userId=${userId}`)
+    fetch(`http://localhost:3001/api/users/${userId}/posts`)
       .then((response) => response.json())
       .then((data) => setPosts(data))
       .catch((error) => console.log(error));

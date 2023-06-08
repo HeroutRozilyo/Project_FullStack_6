@@ -18,7 +18,7 @@ function Todos() {
       try {
         const user = JSON.parse(localStorage.getItem('user'));
         const userId = user.id;
-        const response = await fetch(`https://jsonplaceholder.typicode.com/users/${userId}/todos`);
+        const response = await fetch(`http://localhost:3001/api/users/${userId}/todos`);
         todosData = await response.json();
         setTodos(todosData);
       } catch (error) {

@@ -9,7 +9,7 @@ function Posts() {
   const { id } = useParams();
  const  history=useNavigate();
   useEffect(() => {
-    fetch(`https://jsonplaceholder.typicode.com/posts/${id}`)
+    fetch(`http://localhost:3001/api/posts/${id}`)
     .then(response => response.json())
     .then(data => {
       // Handle the retrieved post data

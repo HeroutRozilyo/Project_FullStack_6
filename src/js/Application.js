@@ -21,17 +21,17 @@ function Application() {
         }
   
         // Fetch posts from the API
-        const postsResponse = await fetch(`https://jsonplaceholder.typicode.com/users/${user.id}/posts`);
+        const postsResponse = await fetch(`http://localhost:3001/api/users/${user.id}/posts`);
         const postsData = await postsResponse.json();
         setPosts(postsData.slice(0, 5));
   
         // Fetch albums from the API
-        const albumsResponse = await fetch(`https://jsonplaceholder.typicode.com/users/${user.id}/albums`);
-        const albumsData = await albumsResponse.json();
-        setAlbums(albumsData.slice(0, 5));
+        // const albumsResponse = await fetch(`http://localhost:3001/api/users/${user.id}/albums`);
+        // const albumsData = await albumsResponse.json();
+        // setAlbums(albumsData.slice(0, 5));
   
         // Fetch todos from the API
-        const todosResponse = await fetch(`https://jsonplaceholder.typicode.com/users/${user.id}/todos`);
+        const todosResponse = await fetch(`http://localhost:3001/api/users/${user.id}/todos`);
         const todosData = await todosResponse.json();
         setTodos(todosData.slice(0, 5));
       } catch (error) {
@@ -49,7 +49,7 @@ function Application() {
       <h1 className="header">Welcome {user && user.name}!</h1>
       <div className="contentAP">
         <div className="sectionAP" id="posts">
-          <Link to="/application/posts">
+          <Link to={`/users/${user && user.username}/posts`}>
             <h2>
               <FaEye className="section-icon" />
               Posts
@@ -62,7 +62,7 @@ function Application() {
           </ul>
         </div>
         <div className="sectionAP" id="album">
-          <Link to="/application/albums">
+          <Link to={`/users/${user && user.username}/albums`}>
             <h2>
               {" "}
               <FaEye className="section-icon" />
@@ -76,7 +76,7 @@ function Application() {
           </ul>
         </div>
         <div className="sectionAP" id="todos">
-          <Link to="/application/todos">
+          <Link to={`/users/${user && user.username}/todos`}>
             <h2>
               <FaEye className="section-icon" />
               Todos

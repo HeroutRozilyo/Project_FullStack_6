@@ -4,12 +4,13 @@ import "../css/toolBar.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 
 function Toolbar() {
+  const user = JSON.parse(localStorage.getItem("user"));
   return (
     <div className="toolbar">
       <ul className="menuBar">
         <li>
           <NavLink
-            to="/application"
+            to={`/users/${user && user.username}`}
             exact="true"
             className={({ isActive }) => (isActive ? "my-link" : null)}
           >
@@ -19,7 +20,7 @@ function Toolbar() {
         </li>
         <li>
           <NavLink
-            to="/application/info"
+            to={`/users/${user && user.username}/info`}
             exact="true"
             className={({ isActive }) => (isActive ? "my-link" : null)}
           >
@@ -29,7 +30,7 @@ function Toolbar() {
         </li>
         <li>
           <NavLink
-            to="/application/todos"
+            to={`/users/${user && user.username}/todos`}
             exact="true"
             className={({ isActive }) => (isActive ? "my-link" : null)}
           >
@@ -39,7 +40,7 @@ function Toolbar() {
         </li>
         <li>
           <NavLink
-            to="/application/posts"
+            to={`/users/${user && user.username}/posts`}
             exact="true"
             className={({ isActive }) => (isActive ? "my-link" : null)}
           >
@@ -49,7 +50,7 @@ function Toolbar() {
         </li>
         <li>
           <NavLink
-            to="/application/albums"
+            to={`/users/${user && user.username}/albums`}
             exact="true"
             className={({ isActive }) => (isActive ? "my-link" : null)}
           >
