@@ -41,17 +41,30 @@ function Todos() {
 
   const updateTodo = async (todo) => {
     try {
-      const response = await fetch(`https://jsonplaceholder.typicode.com/todos/${todo.id}`, {
+      const response = await fetch(`http://localhost:3001/api/todos/${todo.id}`, {
         method: 'PATCH',
         headers: {
-          'Content-Type': 'application/json; charset=UTF-8',
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          completed: !todo.completed,
+          complete: !todo.complete,
         }),
       });
-      const data = await response.json();
-      setTodos(todos.map((t) => (t.id === data.id ? data : t)));
+      
+      if (!response.ok) {
+        throw new Error('Failed to update todo');
+      }
+      
+      const updatedTodo = await response.json();
+      
+      setTodos((prevTodos) => {
+        return prevTodos.map((t) => {
+          if (t.id === updatedTodo.id) {
+            return updatedTodo;
+          }
+          return t;
+        });
+      });
     } catch (error) {
       setError(error);
     }
@@ -61,7 +74,7 @@ function Todos() {
     if (sortOrder === 'serial') {
       return a.id - b.id;
     } else if (sortOrder === 'execution') {
-      return a.completed - b.completed;
+      return a.complete - b.complete;
     } else if (sortOrder === 'alphabetical') {
       return a.title.localeCompare(b.title);
     } else if (sortOrder === 'random') {
@@ -72,9 +85,9 @@ function Todos() {
   let filteredTodos = sortedTodos;
 
   if (filter === 'completed') {
-    filteredTodos = sortedTodos.filter((todo) => todo.completed);
+    filteredTodos = sortedTodos.filter((todo) => todo.complete);
   } else if (filter === 'incomplete') {
-    filteredTodos = sortedTodos.filter((todo) => !todo.completed);
+    filteredTodos = sortedTodos.filter((todo) => !todo.complete);
   }
 
   if (loading) {
@@ -146,7 +159,7 @@ function Todos() {
             <input
               className="todos-checkbox"
               type="checkbox"
-              checked={todo.completed}
+              checked={todo.complete}
               onChange={() => updateTodo(todo)}
             />
             <span className="todos-text">{todo.title}</span>
