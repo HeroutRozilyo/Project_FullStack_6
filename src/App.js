@@ -1,4 +1,3 @@
-
 import "./App.css";
 import Login from "../src/js/Login.js";
 import Main from "../src/js/main.js";
@@ -10,33 +9,30 @@ import AlbumsItem from "./js/AlbumsItem";
 import Application from "./js/Application";
 import PostsMain from "./js/postsMain.js";
 import PostsItem from "./js/postsItems";
+import Register from "./js/Registration"; // Corrected import statement
 
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
-} from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 function App() {
- 
   return (
     <div>
       <Routes>
         <Route path="/" element={<Main />} />
-        <Route path="login" element={<Login />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} /> {/* Corrected route path */}
         <Route element={<Layout />}>
-          <Route path="users/:username" element={<Application />} />
-          <Route path="users/:username/info" element={<Info />} />
-          <Route path="users/:username/todos" element={<Todos />} />
-          <Route path="users/:username/posts" element={<PostsMain />} />
+          <Route path="/users/:username" element={<Application />} />
+          <Route path="/users/:username/info" element={<Info />} />
+          <Route path="/users/:username/todos" element={<Todos />} />
+          <Route path="/users/:username/posts" element={<PostsMain />} />
           <Route
-            path="users/:username/posts/:id/comments"
+            path="/users/:username/posts/:id/comments"
             element={<PostsItem />}
           />
 
-          <Route path="users/:username/albums" element={<AlbumsMain />} />
+          <Route path="/users/:username/albums" element={<AlbumsMain />} />
           <Route
-            path="users/:username/albums/:id/photos"
+            path="/users/:username/albums/:id/photos"
             element={<AlbumsItem />}
           />
         </Route>

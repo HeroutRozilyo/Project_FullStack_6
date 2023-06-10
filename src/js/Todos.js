@@ -44,16 +44,19 @@ function Todos() {
       const response = await fetch(`http://localhost:3001/api/todos/${todo.id}`, {
         method: 'PUT',
         headers: {
-          'Content-Type': 'application/json; charset=UTF-8',
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          complete: todo.complete? false: true,
+          complete: !todo.complete
         }),
       });
-      if (response.ok) {
-        const data = await response.json();
-        fetchTodos();
-      } 
+      
+      if (!response.ok) {
+        throw new Error('Failed to update todo');
+      }
+      const updatedTodo = await response.json();
+      fetchTodos();
+      
     } catch (error) {
       setError(error);
     }

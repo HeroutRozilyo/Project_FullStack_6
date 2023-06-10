@@ -7,7 +7,8 @@ function Posts() {
   const [posts, setPosts] = useState([]);
   const [comments, setComments] = useState([]);
   const { id } = useParams();
- const  history=useNavigate();
+  const  history=useNavigate();
+  const user = JSON.parse(localStorage.getItem('user'));
   useEffect(() => {
     fetch(`http://localhost:3001/api/posts/${id}`)
     .then(response => response.json())
@@ -23,13 +24,13 @@ function Posts() {
 
 
 
-    fetch(`https://jsonplaceholder.typicode.com/comments?postId=${id}`)
+    fetch(`http://localhost:3001/api/comments?postId=${id}`)
       .then((response) => response.json())
       .then((data) => setComments(data))
       .catch((error) => console.log(error));
   }, [id]);
    const handleBackClick=()=>{
-    history('/application/posts');
+    history(`/users/${user.username}/posts`);
 
    }
 

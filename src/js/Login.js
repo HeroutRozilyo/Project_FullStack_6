@@ -50,8 +50,12 @@ function Login() {
       <form className="login-form" onSubmit={handleSubmit}>
         <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} placeholder="Username" />
         <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" />
+        <div className="register-link">
+        Don't have an account? <Link to="/register">Register</Link>
+      </div >
         <button type="submit">{loading ? 'Loading...' : 'Login'}</button> {/* Update button text based on loading state */}
       </form>
+     
     </div>
   );
 }
