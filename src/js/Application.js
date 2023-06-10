@@ -85,7 +85,7 @@ function Application() {
           <ul>
             {todos.map((todo) => (
               <li key={todo.id}>
-                {todo.completed ? (
+                {todo.complete ? (
                   <span className="incomplete-task">
                     <i className="fas fa-times"></i>
                   </span>

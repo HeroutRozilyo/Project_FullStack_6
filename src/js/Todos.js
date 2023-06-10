@@ -9,25 +9,25 @@ function Todos() {
   const [filter, setFilter] = useState('all');
   const [showFilterOptions, setShowFilterOptions] = useState(false);
 
+  const user = JSON.parse(localStorage.getItem('user'));
+  const userId = user.id;
+
+  async function fetchTodos() {
+    let todosData;
+
+    try {
+      const response = await fetch(`http://localhost:3001/api/users/${userId}/todos`);
+      todosData = await response.json();
+      setTodos(todosData);
+    } catch (error) {
+      setError(error);
+    } finally {
+      setLoading(false);
+    }
+  }
+
   useEffect(() => {
     setLoading(true);
-  
-    async function fetchTodos() {
-      let todosData;
-  
-      try {
-        const user = JSON.parse(localStorage.getItem('user'));
-        const userId = user.id;
-        const response = await fetch(`http://localhost:3001/api/users/${userId}/todos`);
-        todosData = await response.json();
-        setTodos(todosData);
-      } catch (error) {
-        setError(error);
-      } finally {
-        setLoading(false);
-      }
-    }
-  
     fetchTodos();
   }, []);
 
@@ -41,17 +41,19 @@ function Todos() {
 
   const updateTodo = async (todo) => {
     try {
-      const response = await fetch(`https://jsonplaceholder.typicode.com/todos/${todo.id}`, {
-        method: 'PATCH',
+      const response = await fetch(`http://localhost:3001/api/todos/${todo.id}`, {
+        method: 'PUT',
         headers: {
           'Content-Type': 'application/json; charset=UTF-8',
         },
         body: JSON.stringify({
-          completed: !todo.completed,
+          complete: todo.complete? false: true,
         }),
       });
-      const data = await response.json();
-      setTodos(todos.map((t) => (t.id === data.id ? data : t)));
+      if (response.ok) {
+        const data = await response.json();
+        fetchTodos();
+      } 
     } catch (error) {
       setError(error);
     }
@@ -61,7 +63,7 @@ function Todos() {
     if (sortOrder === 'serial') {
       return a.id - b.id;
     } else if (sortOrder === 'execution') {
-      return a.completed - b.completed;
+      return a.complete - b.complete;
     } else if (sortOrder === 'alphabetical') {
       return a.title.localeCompare(b.title);
     } else if (sortOrder === 'random') {
@@ -72,9 +74,9 @@ function Todos() {
   let filteredTodos = sortedTodos;
 
   if (filter === 'completed') {
-    filteredTodos = sortedTodos.filter((todo) => todo.completed);
+    filteredTodos = sortedTodos.filter((todo) => todo.complete);
   } else if (filter === 'incomplete') {
-    filteredTodos = sortedTodos.filter((todo) => !todo.completed);
+    filteredTodos = sortedTodos.filter((todo) => !todo.complete);
   }
 
   if (loading) {
@@ -146,7 +148,7 @@ function Todos() {
             <input
               className="todos-checkbox"
               type="checkbox"
-              checked={todo.completed}
+              checked={todo.complete}
               onChange={() => updateTodo(todo)}
             />
             <span className="todos-text">{todo.title}</span>
