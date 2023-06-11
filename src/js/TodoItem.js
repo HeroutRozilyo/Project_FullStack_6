@@ -8,24 +8,24 @@ function TodoItem({updateTodo, todo}) {
 
     const updateTodoComplete = async () => {
         await updateTodo(todo, {complete: !todo.complete});
-      }
+    }
     
-      const editItem = () => {
-        setClassItem(' edit');
-        titleRef.current.focus();
-        titleRef.current.setSelectionRange(0, title.length);
-      }
+    const editItem = () => {
+      setClassItem(' edit');
+      titleRef.current.focus();
+      titleRef.current.setSelectionRange(0, title.length);
+    }
 
-      const updateTodoTitle = async () => {
-        await updateTodo(todo, {title: title});
-        setClassItem('');
-      }
+    const updateTodoTitle = async () => {
+      await updateTodo(todo, {title: title});
+      setClassItem('');
+    }
     
-      const itemKeyPress = (e) => {
-        if (e.keyCode === 13) {
-          updateTodoTitle();
-        }
+    const itemKeyPress = (e) => {
+      if (e.keyCode === 13) {
+        updateTodoTitle();
       }
+    }
 
     return (
         <li className="todos-item">
