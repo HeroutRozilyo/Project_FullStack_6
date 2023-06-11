@@ -55,4 +55,34 @@
   .register-link a:hover {
     text-decoration: underline;
   }
+
+  
+  
+  
+  .password-input {
+    display: flex;
+    align-items: center;
+    width: 115%;
+    position: relative;
+  }
+  
+  .password-toggle-icon {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    z-index: 1;
+  }
+  
+  .password-input input[type="password"] {
+    padding-left: 30px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  
+  
+  
+  
   

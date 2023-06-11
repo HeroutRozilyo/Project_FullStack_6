@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 function Registration() {
   const [name, setName] = useState('');
@@ -8,56 +9,95 @@ function Registration() {
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [website, setWebsite] = useState('');
-  const [loading, setLoading] = useState(false); // Add a state variable to track loading state
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [passwordVisible, setPasswordVisible] = useState(false); // Track the visibility state of the password
+  const [loading, setLoading] = useState(false);
   const history = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    try {
-      // Show loading indicator
-      setLoading(true);
+    if (password !== confirmPassword) {
+      alert('Password and Confirm Password must match');
+      return;
+    }
 
-      const response = await fetch('http://localhost:3001/api/users', {
+    try {
+      setLoading(true);
+    
+      const userResponse = await fetch('http://localhost:3001/api/users', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ name, username, email, phone, website }),
       });
-
-      if (!response.ok) {
-        // Handle API errors
+    
+      if (!userResponse.ok) {
+        const errorMessage = await userResponse.text();
         throw new Error('Registration failed');
       }
-
-      // Registration successful
+    
+      const passwordResponse = await fetch('http://localhost:3001/api/passwords', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, password }),
+      });
+    
+      if (!passwordResponse.ok) {
+        const errorMessage = await passwordResponse.text();
+        throw new Error('Registration failed');
+      }
+    
       history('/login');
     } catch (error) {
-      // Show error message to user
       alert(`Error: ${error.message}`);
     } finally {
-      // Hide loading indicator
       setLoading(false);
     }
+  };    
+
+  const togglePasswordVisibility = () => {
+    setPasswordVisible(!passwordVisible);
   };
 
   return (
     <div className="login">
-    <form className="login-form registration-form" onSubmit={handleSubmit}>
-      <input type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder="Name" required />
-      <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} placeholder="Username" required />
-      <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" required />
-      <input type="text" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="Phone" required />
-      <input type="text" value={website} onChange={(e) => setWebsite(e.target.value)} placeholder="Website" required />
-      <div className="register-link">
-      Already have an account? <Link to="/login">Login</Link>
+      <form className="login-form registration-form" onSubmit={handleSubmit}>
+        <input type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder="Name" required />
+        <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} placeholder="Username" required />
+        <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" required />
+        <input type="text" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="Phone" required />
+        <input type="text" value={website} onChange={(e) => setWebsite(e.target.value)} placeholder="Website" required />
+        <div className="password-input">
+          <input
+            type={passwordVisible ? 'text' : 'password'}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Password"
+            required
+          />
+          <span className="password-toggle-icon" onClick={togglePasswordVisibility}>
+            {passwordVisible ? <FaEyeSlash /> : <FaEye />}
+          </span>
+        </div>
+        <input
+          type="password"
+          value={confirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)}
+          placeholder="Confirm Password"
+          required
+        />
+        <div className="register-link">
+          Already have an account? <Link to="/login">Login</Link>
+        </div>
+        <button type="submit">{loading ? 'Loading...' : 'Register'}</button>
+      </form>
     </div>
-      <button type="submit">{loading ? 'Loading...' : 'Register'}</button> {/* Update button text based on loading state */}
-    </form>
-    
-  </div>
-);
+  );
 }
 
 export default Registration;
