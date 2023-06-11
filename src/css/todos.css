@@ -166,4 +166,15 @@
   }
   
   
+.title-item input {
+  display: none;
+}
+
+.title-item.edit span {
+  display: none;
+}
+
+.title-item.edit input {
+  display: initial;
+}
   

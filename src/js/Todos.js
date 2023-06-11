@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import '../css/todos.css';
+import TodoItem from './TodoItem';
 
 function Todos() {
   const [todos, setTodos] = useState([]);
@@ -39,16 +40,14 @@ function Todos() {
     setFilter(event.target.value);
   };
 
-  const updateTodo = async (todo) => {
+  const updateTodo = async (todo, body) => {
     try {
       const response = await fetch(`http://localhost:3001/api/todos/${todo.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          complete: !todo.complete
-        }),
+        body: JSON.stringify(body),
       });
       
       if (!response.ok) {
@@ -147,15 +146,20 @@ function Todos() {
       </div>
       <ul className="todos-list">
         {filteredTodos.map((todo) => (
-          <li className="todos-item" key={todo.id}>
-            <input
-              className="todos-checkbox"
-              type="checkbox"
-              checked={todo.complete}
-              onChange={() => updateTodo(todo)}
-            />
-            <span className="todos-text">{todo.title}</span>
-          </li>
+          <TodoItem key={todo.id} todo={todo} updateTodo={updateTodo} />
+          // <li className={"todos-item" + classItem.find(ci => ci.id === todo.id).className} key={todo.id} 
+          //     onClick={(e) => editItem(e.target)}
+          //     onBlur={() => updateTodoTitle(todo)}
+          //     onKeyUp={(e) => itemKeyPress(e, todo)}>
+          //   <input
+          //     className="todos-checkbox"
+          //     type="checkbox"
+          //     checked={todo.complete}
+          //     onChange={() => updateTodo(todo)}
+          //   />
+          //   <span className="todos-text">{todo.title}</span>
+          //   <input type="text" value={todo.title} onChange={(e) => updateItem(todo, e.target.value)} />
+          // </li>
         ))}
       </ul>
     </div>
