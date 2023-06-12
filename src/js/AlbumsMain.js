@@ -12,7 +12,7 @@ function Albums() {
 
   useEffect(() => {
     try {
-      fetch(`localhost:3001/api/users/${userId}/albums`)
+      fetch(`http://localhost:3001/api/users/${userId}/albums`)
         .then((response) => response.json())
         .then((data) => setAlbums(data));
     } catch (error) {

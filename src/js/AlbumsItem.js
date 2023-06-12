@@ -7,11 +7,16 @@ function AlbumsItem() {
   const [start, setStart] = useState(0);
   const [end, setEnd] = useState(10);
   const [isLoading, setIsLoading] = useState(true);
-  const { id } = useParams();
+  const { username, id } = useParams();
   const navigate = useNavigate();
 
+  const user = JSON.parse(localStorage.getItem("user"));
+  if(user.username !== username) {
+    navigate(`users/${user.username}/albums/${id}/photos`)
+  }
+
   useEffect(() => {
-    fetch(`http://localhost:3001/api/users/${id}/photos`)
+    fetch(`http://localhost:3001/api/albums/${id}/photos`)
       .then((response) => response.json())
       .then((data) => {
         setPhotos(data);
@@ -30,7 +35,7 @@ function AlbumsItem() {
   };
 
   const handleBackClick = () => {
-    navigate("/application/albums");
+    navigate(`/users/${username}/albums`);
   };
 
   return (
