@@ -36,7 +36,7 @@ function Registration() {
     
       if (!userResponse.ok) {
         const errorMessage = await userResponse.text();
-        throw new Error('Registration failed');
+        throw new Error('Registration failed ' + errorMessage);
       }
     
       const passwordResponse = await fetch('http://localhost:3001/api/passwords', {
@@ -49,7 +49,7 @@ function Registration() {
     
       if (!passwordResponse.ok) {
         const errorMessage = await passwordResponse.text();
-        throw new Error('Registration failed');
+        throw new Error('Registration failed ' + errorMessage);
       }
     
       history('/login');
@@ -70,14 +70,15 @@ function Registration() {
         <input type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder="Name" required />
         <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} placeholder="Username" required />
         <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" required />
-        <input type="text" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="Phone" required />
-        <input type="text" value={website} onChange={(e) => setWebsite(e.target.value)} placeholder="Website" required />
+        <input type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="Phone" required />
+        <input type="text" pattern='[\w\.]{3,}' value={website} onChange={(e) => setWebsite(e.target.value)} placeholder="Website" required />
         <div className="password-input">
           <input
             type={passwordVisible ? 'text' : 'password'}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Password"
+            minLength={6}
             required
           />
           <span className="password-toggle-icon" onClick={togglePasswordVisibility}>
