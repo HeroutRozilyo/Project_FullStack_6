@@ -1,57 +1,53 @@
 import React, { useState, useEffect } from "react";
-import "../css/comments.css"; 
-import "../css/posts.css"; // import the CSS file
-import { useParams,useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+import { AiOutlineDelete } from "react-icons/ai";
+import "../css/comments.css";
+import "../css/posts.css";
 
 function Posts() {
-  const [posts, setPosts] = useState([]);
+  const [post, setPost] = useState(null);
   const [comments, setComments] = useState([]);
   const { id } = useParams();
-  const  history=useNavigate();
-  const user = JSON.parse(localStorage.getItem('user'));
+  const history = useNavigate();
+  const user = JSON.parse(localStorage.getItem("user"));
+
   useEffect(() => {
     fetch(`http://localhost:3001/api/posts/${id}`)
-    .then(response => response.json())
-    .then(data => {
-      // Handle the retrieved post data
-      setPosts(data);
-      console.log(data);
-    })
-    .catch(error => {
-      // Handle any errors
-      console.log(error);
-    });
-
-
+      .then((response) => response.json())
+      .then((data) => {
+        setPost(data);
+        console.log(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
 
     fetch(`http://localhost:3001/api/comments?postId=${id}`)
       .then((response) => response.json())
       .then((data) => setComments(data))
       .catch((error) => console.log(error));
   }, [id]);
-   const handleBackClick=()=>{
-    history(`/users/${user.username}/posts`);
 
-   }
+  const handleBackClick = () => {
+    history(`/users/${user.username}/posts`);
+  };
+
 
   return (
     <div>
-     
-      {posts && (
+      {post && (
         <div className="post-container">
           <div className="post-header">
-          <h2 className="post-title">{posts.title}</h2>
-          
-          <p className="caption">{posts.body}</p>
-          <button
-                    className="view-comments-button"
-                    onClick={() => handleBackClick()}
-                  >
-                   Back to Posts
-                  </button>
-
-          
-        </div>
+            <h2 className="post-title">{post.title}</h2>
+            <p className="caption">{post.body}</p>
+            <button
+              className="view-comments-button"
+              onClick={() => handleBackClick()}
+            >
+              Back to Posts
+            </button>
+           
+          </div>
         </div>
       )}
 
@@ -68,4 +64,4 @@ function Posts() {
   );
 }
 
-export default Posts
+export default Posts;
