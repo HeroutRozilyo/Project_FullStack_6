@@ -43,7 +43,7 @@ function TodoItem({ updateTodo, deleteTodo, todo }) {
           checked={todo.complete}
           onChange={updateTodoComplete}
         />
-        <span className={'title-item' + classItem}>
+        <span className={'title-item' + classItem} onClick={editItem}>
           <span className="todos-text">{todo.title}</span>
           <input
             type="text"

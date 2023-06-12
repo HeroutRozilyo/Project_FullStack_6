@@ -26,7 +26,7 @@ function Login() {
       const user = users[0];
       console.log(user)
 
-      const res = await fetch(`http://localhost:3001/api/passwords/${user.username}`);
+      const res = await fetch(`http://localhost:3001/api/passwords/${user.id}`);
       const pswrd = await res.json();
 
       if (user && password === pswrd.password) {
