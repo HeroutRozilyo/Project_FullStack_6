@@ -10,6 +10,9 @@ function Posts() {
   const { id } = useParams();
   const history = useNavigate();
   const user = JSON.parse(localStorage.getItem("user"));
+  const [commentName, setCommentName] = useState("");
+const [commentEmail, setCommentEmail] = useState("");
+const [commentBody, setCommentBody] = useState("");
 
   useEffect(() => {
     fetch(`http://localhost:3001/api/posts/${id}`)
@@ -31,7 +34,35 @@ function Posts() {
   const handleBackClick = () => {
     history(`/users/${user.username}/posts`);
   };
-
+  const handleAddComment = () => {
+    // Create the new comment object
+    const newComment = {
+      postId: post.id,
+      name: commentName,
+      email: commentEmail,
+      body: commentBody,
+    };
+  
+    // Send a POST request to the server to add the comment
+    fetch("http://localhost:3001/api/comments", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newComment),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        // Update the comments state with the new comment
+        setComments([...comments, data]);
+  
+        // Clear the input fields
+        setCommentName("");
+        setCommentEmail("");
+        setCommentBody("");
+      })
+      .catch((error) => console.log(error));
+  };
 
   return (
     <div>
@@ -51,16 +82,41 @@ function Posts() {
         </div>
       )}
 
-      <div className="post-comments">
-        <h3 className="comments-header">Comments</h3>
-        {comments.map((comment) => (
-          <div key={comment.id} className="comment-container">
-            <p className="comment-name">{comment.name}</p>
-            <p className="comment-body">{comment.body}</p>
-          </div>
-        ))}
-      </div>
+<div className="post-comments">
+  <h3 className="comments-header">Comments</h3>
+  <div className="add-comment-container">
+    <h3 className="add-comment-header">Add a Comment</h3>
+    <input
+      type="text"
+      placeholder="Your Name"
+      value={commentName}
+      onChange={(e) => setCommentName(e.target.value)}
+    />
+    <input
+      type="email"
+      placeholder="Your Email"
+      value={commentEmail}
+      onChange={(e) => setCommentEmail(e.target.value)}
+    />
+    <textarea
+      placeholder="Your Comment"
+      value={commentBody}
+      onChange={(e) => setCommentBody(e.target.value)}
+    ></textarea>
+    <button className="add-comment-button" onClick={handleAddComment}>
+      Add Comment
+    </button>
+  </div>
+  {comments.map((comment) => (
+    <div key={comment.id} className="comment-container">
+      <p className="comment-name">{comment.name}</p>
+      <p className="comment-body">{comment.body}</p>
     </div>
+  ))}
+
+
+</div>
+</div>
   );
 }
 
