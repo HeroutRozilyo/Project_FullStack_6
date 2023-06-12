@@ -69,8 +69,17 @@
   .todos-item {
     display: flex;
     align-items: center;
-    margin-bottom: 5px;
+    justify-content: space-between;
   }
+  
+  .todos-content {
+    display: flex;
+    align-items: center;
+  }
+
+ 
+
+  
   
   .todos-checkbox {
     margin-right: 10px;
@@ -168,13 +177,60 @@
   
 .title-item input {
   display: none;
+  width: 100%;
 }
 
 .title-item.edit span {
   display: none;
+  flex-grow: 1;
+  width: 100%;
+  min-width: 200px; 
 }
 
 .title-item.edit input {
   display: initial;
+  width: 100%;
 }
+
+.todos-add-task {
+  display: flex;
+  align-items: center;
+}
+
+.todos-add-task input[type="text"] {
+  flex-grow: 1;
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+}
+
+.todos-add-task button {
+  margin-left: 10px;
+  padding: 5px 10px;
+  background-color: #4267B2;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.todos-delete-icon {
+  cursor: pointer;
+  color: #3b5998;
+  margin-left: 10px;
+  transition: color 0.2s ease;
+}
+
+.todos-delete-icon:hover {
+  color: #3b5998;
+}
+
+
+
+
+
+
+
+
+
+
   

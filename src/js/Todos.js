@@ -9,6 +9,7 @@ function Todos() {
   const [sortOrder, setSortOrder] = useState('serial');
   const [filter, setFilter] = useState('all');
   const [showFilterOptions, setShowFilterOptions] = useState(false);
+  const [newTask, setNewTask] = useState('');
 
   const user = JSON.parse(localStorage.getItem('user'));
   const userId = user.id;
@@ -56,6 +57,47 @@ function Todos() {
       const updatedTodo = await response.json();
       fetchTodos();
       
+    } catch (error) {
+      setError(error);
+    }
+  };
+
+  const addNewTask = async () => {
+    try {
+      const response = await fetch(`http://localhost:3001/api/todos`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          title: newTask,
+          userId: userId,
+          complete:0,
+        }),
+      });
+      
+      if (!response.ok) {
+        throw new Error('Failed to add new task');
+      }
+      
+      setNewTask('');
+      fetchTodos();
+      
+    } catch (error) {
+      setError(error);
+    }
+  };
+  const deleteTodo = async (todo) => {
+    try {
+      const response = await fetch(`http://localhost:3001/api/todos/${todo.id}`, {
+        method: 'DELETE',
+      });
+  
+      if (!response.ok) {
+        throw new Error('Failed to delete todo');
+      }
+  
+      fetchTodos();
     } catch (error) {
       setError(error);
     }
@@ -144,25 +186,18 @@ function Todos() {
           </select>
         </div>
       </div>
+      <div className='todos-add-task'>
+        <input type="text" value={newTask} onChange={(e) => setNewTask(e.target.value)} />
+        <button onClick={addNewTask}>Add Task</button>
+      </div>
       <ul className="todos-list">
-        {filteredTodos.map((todo) => (
-          <TodoItem key={todo.id} todo={todo} updateTodo={updateTodo} />
-          // <li className={"todos-item" + classItem.find(ci => ci.id === todo.id).className} key={todo.id} 
-          //     onClick={(e) => editItem(e.target)}
-          //     onBlur={() => updateTodoTitle(todo)}
-          //     onKeyUp={(e) => itemKeyPress(e, todo)}>
-          //   <input
-          //     className="todos-checkbox"
-          //     type="checkbox"
-          //     checked={todo.complete}
-          //     onChange={() => updateTodo(todo)}
-          //   />
-          //   <span className="todos-text">{todo.title}</span>
-          //   <input type="text" value={todo.title} onChange={(e) => updateItem(todo, e.target.value)} />
-          // </li>
-        ))}
-      </ul>
+      {filteredTodos.map((todo) => (
+        <TodoItem key={todo.id} todo={todo} updateTodo={updateTodo} deleteTodo={deleteTodo} />
+      ))}
+    </ul>
+     
     </div>
   );
-        }  
+}
+
 export default Todos;
