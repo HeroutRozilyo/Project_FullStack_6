@@ -25,10 +25,10 @@ function Application() {
         const postsData = await postsResponse.json();
         setPosts(postsData.slice(0, 5));
   
-        // Fetch albums from the API
-        const albumsResponse = await fetch(`http://localhost:3001/api/users/${user.id}/albums`);
-        const albumsData = await albumsResponse.json();
-        setAlbums(albumsData.slice(0, 5));
+        // // Fetch albums from the API
+        // const albumsResponse = await fetch(`http://localhost:3001/api/users/${user.id}/albums`);
+        // const albumsData = await albumsResponse.json();
+        // setAlbums(albumsData.slice(0, 5));
   
         // Fetch todos from the API
         const todosResponse = await fetch(`http://localhost:3001/api/users/${user.id}/todos`);

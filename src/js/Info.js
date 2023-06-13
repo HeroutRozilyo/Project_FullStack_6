@@ -11,12 +11,17 @@ function Info() {
     email: false,
     phone: false,
     website: false,
+    password: false,
   });
   const [updatedFields, setUpdatedFields] = useState({
     name: user.name,
     email: user.email,
     phone: user.phone,
     website: user.website,
+    password: '',
+    currentPassword: '',
+    newPassword: '',
+    newPasswordVerify: '',
   });
 
   const handleEdit = (field) => {
@@ -61,6 +66,47 @@ function Info() {
       alert(`Error: ${error.message}`);
     }
   };
+
+  const handlePasswordSave = async () => {
+    const { currentPassword, newPassword, newPasswordVerify } = updatedFields;
+  
+    if (newPassword !== newPasswordVerify) {
+      alert('New password and password verification do not match');
+      return;
+    }
+  
+    try {
+      const res = await fetch(`http://localhost:3001/api/passwords/${user.username}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ currentPassword, newPassword }),
+      });
+      const data = await res.json();
+  
+      if (res.ok) {
+        // Password updated successfully
+        alert("The password has been changed successfully!")
+        setEditableFields((prevEditableFields) => ({
+          ...prevEditableFields,
+          password: false,
+        }));
+  
+        setUpdatedFields((prevUpdatedFields) => ({
+          ...prevUpdatedFields,
+          currentPassword: '',
+          newPassword: '',
+          newPasswordVerify: '',
+        }));
+      } else {
+        throw new Error(data.message);
+      }
+    } catch (error) {
+      alert(`Error: ${error.message}`);
+    }
+  };
+  
 
   return (
     <div className="profile">
@@ -170,6 +216,42 @@ function Info() {
                   onClick={() => handleEdit('website')}
                 />
               </>
+            )}
+          </span>
+        </p>
+        <p>
+          <span className="edit-icon-container">
+            Password:{' '}
+            {editableFields.password ? (
+              <>
+                <input
+                  type="password"
+                  placeholder="Current Password"
+                  value={updatedFields.currentPassword}
+                  onChange={(e) => handleInputChange(e, 'currentPassword')}
+                />
+                <input
+                  type="password"
+                  placeholder="New Password"
+                  value={updatedFields.newPassword}
+                  onChange={(e) => handleInputChange(e, 'newPassword')}
+                />
+                <input
+                  type="password"
+                  placeholder="Verify New Password"
+                  value={updatedFields.newPasswordVerify}
+                  onChange={(e) => handleInputChange(e, 'newPasswordVerify')}
+                />
+                <button className="save-button" onClick={handlePasswordSave}>
+                  Save
+                </button>
+              </>
+            ) : (
+              <FontAwesomeIcon
+                icon={faPencilAlt}
+                className="edit-icon"
+                onClick={() => handleEdit('password')}
+              />
             )}
           </span>
         </p>
