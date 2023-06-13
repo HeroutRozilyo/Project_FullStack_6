@@ -77,5 +77,40 @@
 .album-card:hover .album-title-text {
   background-color: rgba(0, 0, 0, 0.9);
 }
+.album-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+
+.album-actions button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+}
+
+.save-icon,
+.cancel-icon {
+  margin-left: 14px;
+  cursor: pointer;
+  color: #3b5998;
+}
+
+.save-icon:hover
+ {
+  color: #3b987b;
+}
+
+.cancel-icon:hover {
+  color: #ff4040;
+}
+.edit-icon{
+  color: #3b5998;
+}
+
 
 
