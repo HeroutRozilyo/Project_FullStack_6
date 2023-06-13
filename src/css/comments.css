@@ -11,7 +11,7 @@
   
   .comment-container {
     background-color: #f6f7f9;
-    padding: 15px;
+    padding: 15px 100px 15px 15px;
     border-radius: 5px;
     margin-bottom: 15px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -107,5 +107,37 @@
     box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
     pointer-events: none;
     z-index: -1;
+  }
+
+  .add-comment-container {
+    display: flex;
+    margin-bottom: 15px;
+  }
+  
+  .add-comment-container input[type="text"],
+  .add-comment-container input[type="email"],
+  .add-comment-container textarea {
+    flex: 1;
+    margin-right: 10px;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+
+  .add-comment-container textarea {
+    flex: 2;
+  }
+  
+  .add-comment-container button.add-comment-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #fff;
+    background-color: #3b5998;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
   }
   

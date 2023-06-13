@@ -118,7 +118,7 @@ function Posts() {
       setNewPostTitle(postToEdit.title);
       setNewPostBody(postToEdit.body);
       setIsEditMode(true);
-      setScrollPosition(window.pageYOffset);
+      setScrollPosition(window.scrollY);
       window.scrollTo(0, 0); // Scroll to top of the page
     }
   };
@@ -211,12 +211,10 @@ function Posts() {
                 ></textarea>
                 <div className="edit-buttons">
                   <button className="save-button" onClick={() => handleSavePost(selectedPost)}>
-                    <AiOutlineSave />
-                   
+                    <AiOutlineSave /> 
                   </button>
                   <button className="cancel-button" onClick={handleCancelEdit}>
                     <AiOutlineClose />
-                   
                   </button>
                 </div>
               </div>
@@ -238,16 +236,16 @@ function Posts() {
               {!isEditMode && (
                 <>
                   <div className="post-actions">
-                  <div className="edit-delete-buttons">
-          <button className="edit-button" onClick={() => handleEditPost(post.id)}>
-            <AiOutlineEdit />
-            Edit
-          </button>
-          <button className="delete-post-button" onClick={() => handleDeletePost(post.id)}>
-            <AiOutlineDelete />
-            Delete 
-          </button>
-        </div>
+                    <div className="edit-delete-buttons">
+                      <button className="edit-button" onClick={() => handleEditPost(post.id)}>
+                        <AiOutlineEdit />
+                        Edit
+                      </button>
+                      <button className="delete-post-button" onClick={() => handleDeletePost(post.id)}>
+                        <AiOutlineDelete />
+                        Delete 
+                      </button>
+                    </div>
                   </div>
                   {selectedPost === post.id && (
                     <>

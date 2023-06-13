@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { AiOutlineDelete } from "react-icons/ai";
+import { AiOutlineDelete, AiOutlineEdit, AiOutlineSave, AiOutlineClose } from "react-icons/ai";
 import "../css/comments.css";
 import "../css/posts.css";
 
@@ -11,8 +11,11 @@ function Posts() {
   const history = useNavigate();
   const user = JSON.parse(localStorage.getItem("user"));
   const [commentName, setCommentName] = useState("");
-const [commentEmail, setCommentEmail] = useState("");
-const [commentBody, setCommentBody] = useState("");
+  const [commentEmail, setCommentEmail] = useState("");
+  const [commentBody, setCommentBody] = useState("");
+  const [isEditMode, setIsEditMode] = useState(false);
+  const [selectedComment, setSelectedComment] = useState(null);
+  const [scrollPosition, setScrollPosition] = useState(0);
 
   useEffect(() => {
     fetch(`http://localhost:3001/api/posts/${id}`)
@@ -34,6 +37,59 @@ const [commentBody, setCommentBody] = useState("");
   const handleBackClick = () => {
     history(`/users/${user.username}/posts`);
   };
+
+  const handleEditComment = (commentId) => {
+    const commentToEdit = comments.find((comment) => comment.id === commentId);
+    if (commentToEdit) {
+      setSelectedComment(commentId);
+      setCommentName(commentToEdit.name);
+      setCommentEmail(commentToEdit.email)
+      setCommentBody(commentToEdit.body);
+      setIsEditMode(true);
+      setScrollPosition(window.scrollY);
+      window.scrollTo(0, 0); // Scroll to top of the page
+    }
+  };
+
+  const handleCancelEdit = () => {
+    setIsEditMode(false);
+    setSelectedComment(null);
+    setCommentName("");
+    setCommentEmail("")
+    setCommentBody("");
+    window.scrollTo(0, scrollPosition); // Scroll back to the previous position
+  };
+
+  const resetComments = (response, method) => {
+    if(response.ok) {
+      fetch(`http://localhost:3001/api/comments?postId=${id}`)
+      .then((response) => response.json())
+      .then((data) => {
+        // Update the comments state with the new comment
+        setComments(data);
+        if(method === "put") {
+          window.scrollTo(0, scrollPosition)
+        }
+        // Clear the input fields
+        setCommentName("");
+        setCommentEmail("");
+        setCommentBody("");
+      })
+      .catch((error) => alert(error));
+    } else {
+      response.text()
+      .then(err => alert(err))
+      .catch(err => alert(err));
+    }
+  }
+
+  const handleDeleteComment = (commentId) => {
+    fetch(`http://localhost:3001/api/comments/${commentId}`, {
+      method: "DELETE",
+    })
+      .then(res => resetComments(res, "delete"));
+  };
+
   const handleAddComment = () => {
     // Create the new comment object
     const newComment = {
@@ -51,17 +107,27 @@ const [commentBody, setCommentBody] = useState("");
       },
       body: JSON.stringify(newComment),
     })
-      .then((response) => response.json())
-      .then((data) => {
-        // Update the comments state with the new comment
-        setComments([...comments, data]);
+      .then(res => resetComments(res, "post"));
+  };
+
+  const handleUpdateComment = (commentId) => {
+    // Create the updated comment object
+    const updatedComment = {
+      name: commentName,
+      email: commentEmail,
+      body: commentBody,
+    };
   
-        // Clear the input fields
-        setCommentName("");
-        setCommentEmail("");
-        setCommentBody("");
-      })
-      .catch((error) => console.log(error));
+    // Send a PUT request to the server to update the comment
+    fetch(`http://localhost:3001/api/comments/${commentId}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(updatedComment),
+    })
+      .then((res) => resetComments(res, "put"))
+      .then(setIsEditMode(false));
   };
 
   return (
@@ -84,8 +150,11 @@ const [commentBody, setCommentBody] = useState("");
 
 <div className="post-comments">
   <h3 className="comments-header">Comments</h3>
+  <h3 className="add-comment-header">
+    {isEditMode? "Edit Comment" : "Add a Comment"}
+  </h3>
+  <form>
   <div className="add-comment-container">
-    <h3 className="add-comment-header">Add a Comment</h3>
     <input
       type="text"
       placeholder="Your Name"
@@ -103,14 +172,38 @@ const [commentBody, setCommentBody] = useState("");
       value={commentBody}
       onChange={(e) => setCommentBody(e.target.value)}
     ></textarea>
+    {!isEditMode?
     <button className="add-comment-button" onClick={handleAddComment}>
       Add Comment
-    </button>
+    </button>:
+    <div className="edit-buttons">
+      <button className="save-button" onClick={() => handleUpdateComment(selectedComment)}>
+        <AiOutlineSave />
+      </button>
+      <button className="cancel-button" onClick={handleCancelEdit}>
+        <AiOutlineClose />
+      </button>
+    </div>}
   </div>
+  </form>
   {comments.map((comment) => (
     <div key={comment.id} className="comment-container">
       <p className="comment-name">{comment.name}</p>
       <p className="comment-body">{comment.body}</p>
+      {!isEditMode && 
+        <div className="post-actions">
+          <div className="edit-delete-buttons">
+            <button className="edit-button" onClick={() => handleEditComment(comment.id)}>
+              <AiOutlineEdit />
+              Edit
+            </button>
+            <button className="delete-post-button" onClick={() => handleDeleteComment(comment.id)}>
+              <AiOutlineDelete />
+              Delete 
+            </button>
+          </div>
+        </div>
+      }
     </div>
   ))}
 
