@@ -6,7 +6,6 @@ import "../css/posts.css";
 function Posts() {
   const [posts, setPosts] = useState([]);
   const [selectedPost, setSelectedPost] = useState(null);
-  const [comments, setComments] = useState([]);
   const [showComments, setShowComments] = useState(false);
   const [newPostTitle, setNewPostTitle] = useState("");
   const [newPostBody, setNewPostBody] = useState("");
@@ -148,9 +147,8 @@ function Posts() {
       },
       body: JSON.stringify(updatedPost),
     })
-      .then((response) => response.json())
-      .then((data) => {
-        setIsLoading(false);
+      .then((response) =>  {
+        if(response.ok) {
         setIsEditMode(false);
 
         // Refresh the posts list
@@ -163,10 +161,14 @@ function Posts() {
           .catch((error) => {
             console.log(error);
           });
+        } else {
+          response.text()
+          .then(err => alert(err))
+          .catch(err => alert(err));
+        }
       })
       .catch((error) => {
         console.log(error);
-        setIsLoading(false);
       });
   };
 

@@ -3,7 +3,7 @@ import { Outlet, useParams, Link } from "react-router-dom";
 import "../css/album.css";
 import image from '../Image/galery.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPen, faSave, faTimes, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faPen, faSave, faTimes, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 function Albums() {
   const [albums, setAlbums] = useState([]);
@@ -57,6 +57,24 @@ function Albums() {
     }
   };
 
+  const handleDeleteAlbumTitle = async (albumId) => {
+    try {
+      const res = await fetch(`http://localhost:3001/api/albums/${albumId}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (res.ok) {
+        setAlbums(albums.filter(a => a.id !== albumId));
+      } else {
+        throw new Error("Failed to delete album");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const handleEditAlbumTitle = (albumId, currentTitle) => {
     setSelectedAlbum(albumId);
     setUpdatedTitle(currentTitle);
@@ -84,26 +102,21 @@ const handleAddAlbum = async () => {
     });
 
     if (res.ok) {
-      const res = await fetch(`http://localhost:3001/api/users/${userId}/albums/maxId`, {
-  method: "GET",
-  headers: {
-    "Content-Type": "application/json",
-  },
-});
-
-if (res.ok) {
-  const newAlbum = await res.json();
-  console.log(newAlbum);
-  setAlbums([...albums, newAlbum]);
-      setUpdatedTitle(newAlbum.title); // Update the title to the new album's title
-      setCreatingAlbum(false);
-
-
-} else {
-  console.log("Failed to fetch album with max ID");
-}
-      
-      
+      const resp = await fetch(`http://localhost:3001/api/users/${userId}/albums/maxId`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        }
+      });
+      if (resp.ok) {
+        const newAlbum = await resp.json();
+        console.log(newAlbum);
+        setAlbums(prevAlbums => [...prevAlbums, newAlbum]);
+        setUpdatedTitle("");
+        setCreatingAlbum(false);
+      } else {
+        console.log("Failed to fetch album with max ID");
+      } 
     } else {
       throw new Error("Failed to create album");
     }
@@ -127,14 +140,48 @@ if (res.ok) {
     <div>
       <div className="album-container">
         <ul className="album-list">
+        {creatingAlbum ? (
+          <div className="album-card">
+            <div className="album-image">
+              <input
+                type="text"
+                className="input-title"
+                value={updatedTitle}
+                onChange={handleTitleChange}
+                placeholder="Enter album title"
+              />
+              <span className="album-title-text">Create Album</span>
+              <div className="album-actions-buttons">
+                <button onClick={handleAddAlbum}>
+                  <FontAwesomeIcon icon={faSave} className="save-icon" />
+                </button>
+                <button onClick={handleCancelCreate}>
+                  <FontAwesomeIcon icon={faTimes} className="cancel-icon" />
+                </button>
+              </div>
+            </div>
+          </div>
+          ) : (
+            <div className="album-card"
+              onClick={handleCreateAlbum}>
+              <div className="album-image">
+                <FontAwesomeIcon
+                  icon={faPlus}
+                  className="add-icon"
+                />
+                <span className="album-title-text">Create Album</span>
+              </div>
+            </div>
+          )}
           {albums.map((album) => (
             <div key={album.id} className="album-card">
+              <div className="album-image">
                <Link
               to={`${album.id}/photos`}
               key={album.id}
-              className="album-image"
             >
                 <img src={image} alt={album.title} />
+            </Link>
                 <span className="album-title-text">
                   {album.id === selectedAlbum ? (
                     <input
@@ -146,7 +193,7 @@ if (res.ok) {
                     album.title
                   )}
                 </span>
-              </Link>
+              </div>
               <div className="album-actions">
                 {album.id === selectedAlbum ? (
                   <>
@@ -158,47 +205,22 @@ if (res.ok) {
                     </button>
                   </>
                 ) : (
-                  <FontAwesomeIcon
-                    icon={faPen}
-                    className="edit-icon"
-                    onClick={() => handleEditAlbumTitle(album.id, album.title)}
-                  />
+                  <>
+                    <FontAwesomeIcon
+                      icon={faPen}
+                      className="edit-icon"
+                      onClick={() => handleEditAlbumTitle(album.id, album.title)}
+                    />
+                    <FontAwesomeIcon
+                      icon={faTrash}
+                      className="delete-icon"
+                      onClick={() => handleDeleteAlbumTitle(album.id)}
+                    />
+                  </>
                 )}
               </div>
             </div>
           ))}
-        {creatingAlbum ? (
-  <div className="album-card">
-    <div className="album-image">
-      <input
-        type="text"
-        value={updatedTitle}
-        onChange={handleTitleChange}
-        placeholder="Enter album title"
-      />
-      <div className="album-action-buttons">
-        <button onClick={handleAddAlbum}>
-          <FontAwesomeIcon icon={faSave} className="save-icon" />
-        </button>
-        <button onClick={handleCancelCreate}>
-          <FontAwesomeIcon icon={faTimes} className="cancel-icon" />
-        </button>
-      </div>
-    </div>
-  </div>
-) : (
-  <div className="album-card">
-    <div className="album-image">
-      <FontAwesomeIcon
-        icon={faPlus}
-        className="add-icon"
-        onClick={handleCreateAlbum}
-      />
-      <span className="album-title-text">Create Album</span>
-    </div>
-  </div>
-)}
-
         </ul>
       </div>
       <Outlet />
