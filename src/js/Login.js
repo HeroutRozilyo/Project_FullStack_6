@@ -31,7 +31,7 @@ function Login() {
 
       if (user && password === pswrd.password) {
         localStorage.setItem('user', JSON.stringify(user));
-        history(`/users/${user && user.name}`);
+        history(`/users/${user && user.username}`);
       } else {
         // Handle API errors
         throw new Error('Invalid login credentials');

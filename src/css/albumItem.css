@@ -3,6 +3,7 @@
   }
   
   .photo-list {
+    margin-top: 15px;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     grid-gap: 10px;
@@ -35,5 +36,24 @@
   .load-more-button:hover {
     background-color: #2d4373;
   }
+
+  .photo-item-container {
+    position: relative;
+  }
   
-  
+  div.photo-list div.photo-item-container .delete-icon {
+    position: absolute;
+    margin-top: 10px;
+    padding: 5px;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    overflow: visible;
+    border-radius: 50%;
+    background-color: rgb(255, 255, 255, 0.5);
+    display: none;
+  }
+
+  div.photo-list div.photo-item-container:hover .delete-icon {
+    display: block;
+  }
