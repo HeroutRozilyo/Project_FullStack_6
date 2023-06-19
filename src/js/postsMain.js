@@ -112,6 +112,7 @@ function Posts() {
   };
 
   const handleEditPost = (postId) => {
+    setSelectedPost(postId);
     const postToEdit = posts.find((post) => post.id === postId);
     if (postToEdit) {
       setNewPostTitle(postToEdit.title);
