@@ -1,6 +1,6 @@
 Readme:
 
-# Polestack Course - Project Six: React Client for Simple Facebook
+# FullStack Course - Project Six: React Client for Simple Facebook
 
 Welcome to the sixth project in the Polestack course! This project serves as an extension to Prefect 5, where we will be building a React client to interact with a REST API in front of a server. The server will behave like a json placeholder server, and we will be using NodeJS + Express for the server and MySQL (or MongoDB) for the database, similar to the json placeholder server.
 
