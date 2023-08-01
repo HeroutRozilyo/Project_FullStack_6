@@ -1,70 +1,38 @@
-# Getting Started with Create React App
+Readme:
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Polestack Course - Project Six: React Client for Simple Facebook
 
-## Available Scripts
+Welcome to the sixth project in the Polestack course! This project serves as an extension to Prefect 5, where we will be building a React client to interact with a REST API in front of a server. The server will behave like a json placeholder server, and we will be using NodeJS + Express for the server and MySQL (or MongoDB) for the database, similar to the json placeholder server.
 
-In the project directory, you can run:
+## Project Overview
 
-### `npm start`
+The goal of this project is to create a simple Facebook-like system for managing posts, comments, photo albums, and a todos list. The system will have the following main components:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+1. React Client: A web-based client built using React to interact with the REST API.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+2. NodeJS + Express Server: The backend server built using NodeJS and Express to handle API requests and interact with the database.
 
-### `npm test`
+3. MySQL or MongoDB Database: The information will be stored in SQL tables if using MySQL or in a NoSQL format if using MongoDB.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Functionality
 
-### `npm run build`
+The system will offer the following features:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+1. **Posts Management:** Users can create new posts, view existing posts, and delete their own posts.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+2. **Comments:** Users can leave comments on posts and delete their own comments.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+3. **Photo Albums:** Users can create photo albums, upload photos to their albums, and delete their albums.
 
-### `npm run eject`
+4. **Todos List:** Users can manage a todos list by adding new todos, marking them as completed, and deleting completed todos.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## Technologies Used
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- React: Frontend framework for building the client-side application.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+- NodeJS: Server-side runtime environment for building the backend.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+- Express: Web framework for NodeJS, used to create the REST API.
 
-## Learn More
+- MySQL : The choice of the database system will determine whether SQL  will be used for data storage.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
